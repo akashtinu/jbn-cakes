@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts, addProduct, deleteProduct } from '../services/api';
+import { getProducts, addProduct, deleteProduct, getProductImageUrl } from '../services/api';
 import { Plus, Trash2, Image as ImageIcon } from 'lucide-react';
 import './ProductsPage.css';
 
@@ -107,7 +107,7 @@ const ProductsPage = () => {
                     <td>
                       {product.imageUrl ? (
                         <img 
-                          src={`http://localhost:8080/api/cakes/images/${product.imageUrl}`} 
+                          src={getProductImageUrl(product.imageUrl)} 
                           alt={product.name} 
                           className="product-img"
                           onError={(e) => {e.target.onerror = null; e.target.src = '/images/logo.png'}}

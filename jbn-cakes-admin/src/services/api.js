@@ -88,3 +88,8 @@ export const getReferencePhotoUrl = (filename) => {
   if (!filename) return null;
   return `${API_BASE}/orders/images/${filename}`;
 };
+
+export const getProductImageUrl = (filename) => {
+  if (!filename) return null;
+  return `${API_BASE}/cakes/images/${filename}`;
+};
