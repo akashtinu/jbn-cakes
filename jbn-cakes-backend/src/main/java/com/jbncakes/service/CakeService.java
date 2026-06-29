@@ -2,8 +2,10 @@ package com.jbncakes.service;
 
 import com.jbncakes.model.Cake;
 import com.jbncakes.repository.CakeRepository;
+import com.jbncakes.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,11 +20,13 @@ import java.util.UUID;
 public class CakeService {
 
     private final CakeRepository cakeRepository;
+    private final OrderItemRepository orderItemRepository;
     private final Path uploadDir = Paths.get("uploads");
 
     @Autowired
-    public CakeService(CakeRepository cakeRepository) {
+    public CakeService(CakeRepository cakeRepository, OrderItemRepository orderItemRepository) {
         this.cakeRepository = cakeRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     public List<Cake> getAllCakes() {
@@ -54,7 +58,11 @@ public class CakeService {
         return cakeRepository.save(cake);
     }
 
+    @Transactional
     public void deleteCake(Long id) {
+        // First delete all order items referencing this cake to avoid foreign key constraint error
+        orderItemRepository.deleteByCakeId(id);
+        // Now safely delete the cake
         Cake cake = getCakeById(id);
         cakeRepository.delete(cake);
     }
