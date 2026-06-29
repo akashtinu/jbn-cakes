@@ -1,0 +1,192 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 2rem;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  background: transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 248, 240, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 1rem 2rem;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo img {
+  height: 45px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover img {
+  transform: scale(1.05);
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-weight: 500;
+  font-size: 1.1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--primary);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after, .nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.social-icon, .cart-icon {
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.social-icon:hover, .cart-icon:hover {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.cart-badge, .cart-badge-sm {
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.cart-badge {
+  margin-left: 8px;
+}
+
+.cart-badge-sm {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.mobile-toggle {
+  display: none;
+  background: transparent;
+  color: var(--text-dark);
+}
+
+/* Colors for transparent state over dark hero */
+.navbar.transparent .nav-links a {
+  color: var(--text-light);
+}
+
+.navbar.transparent .social-icon, 
+.navbar.transparent .cart-icon, 
+.navbar.transparent .mobile-toggle {
+  color: var(--text-light);
+}
+
+.navbar.transparent .brand-name {
+  color: var(--text-light);
+}
+
+.navbar.transparent .nav-links a:hover, 
+.navbar.transparent .nav-links a.active {
+  color: var(--primary);
+}
+
+.navbar.transparent .social-icon:hover, 
+.navbar.transparent .cart-icon:hover {
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .navbar, .navbar.scrolled {
+    padding: 1rem 1rem;
+  }
+  
+  .brand-logo img {
+    height: 35px;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--bg-cream);
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  
+  .nav-links.open {
+    right: 0;
+  }
+  
+  /* Ensure mobile menu text is always dark even when navbar is transparent */
+  .navbar.transparent .nav-links.open a {
+    color: var(--text-dark);
+  }
+
+  .navbar.transparent .nav-links.open a:hover,
+  .navbar.transparent .nav-links.open a.active {
+    color: var(--primary);
+  }
+  
+  .mobile-toggle {
+    display: block;
+    z-index: 1001;
+  }
+}
